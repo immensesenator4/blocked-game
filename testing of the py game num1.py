@@ -28,8 +28,6 @@ screen= pygame.display.set_mode(win_size,0,32)
 end_game = False
 text_surface = my_font.render('1 0', False, (234, 0, 0))
 
-
-
 #class's and funcs
 def input(key):
     if key == None:
@@ -53,7 +51,6 @@ def input(key):
 def points(player):
     r=True
     sixth= 0
-    
     g=0
     e=0
     v=0
@@ -68,8 +65,6 @@ def points(player):
             
             qwerty=None  
             g=i+e
-            
-                
             
             if 'tag' in b.list_blocks_in_main_chain[g]and f.color[player] == b.list_blocks_in_main_chain[g][0]:
                 v+=1
@@ -87,8 +82,6 @@ def points(player):
             elif f.color[player] in b.list_blocks_in_main_chain[g]:
                 sixth= True
                 
-            
-                
             if sixth == True  :
                 
 
@@ -104,10 +97,6 @@ def points(player):
         main_blocks[player]= v
         
     
-            
-                    
-                    
-
 def angled_draw(color,pos1y, pos2y,pos1x, pos2x,player):
     
     if pos1y==0 and pos2y==0:
@@ -129,7 +118,7 @@ def angled_draw(color,pos1y, pos2y,pos1x, pos2x,player):
     y=pos2y+player*2
     for i in range(0,(player+1)):
         screen.blit(text_surface,normal_draw)
-        x+=median_draw_x
+        x-=median_draw_x
         y+=median_draw_y
         normal_draw=(x,y)
         
@@ -177,9 +166,6 @@ class Block():
                     main_blocks[player]+=1
                 self.player_blockinary[player]=[]
                 
-                
-                
-
             else:
                 return None
         elif player_action == 'catch':
@@ -191,9 +177,7 @@ class Player():
         self.player_cards_dict ={}
         self.amount= amount
         self.color = {}
-        self.time = {}
-        self.bot_dict={}
-        
+        self.bot_dict={}        
         self.current_pos= { }
         self.pos= 0
         self.win_list={}
@@ -204,13 +188,9 @@ class Player():
             j=r.randint(0,255)
             d=r.randint(0,255)
             self.color_player[l]= i
-            self.time[i]=time.time()
             self.color[i]=(l,j,d)
             self.current_pos[i]=self.pos
-            self.win_list[i]=0
-            
-            
-                
+            self.win_list[i]=0        
             if l >= 255:
                 l=255
     # def hand(self):
@@ -244,11 +224,6 @@ class Player():
          mid_point= (450)/(self.amount)-(size/(self.amount-minus))*(self.amount+1)+(size/(self.amount*2.5))
          interprater={}
          
-           
-                
-         
-        
-         
          mid_point= 450/self.amount
          for i in range(0,self.amount):
              
@@ -273,7 +248,6 @@ class Player():
                 text_surface = my_font.render('bot'+' '+str(i+1-players), False, self.color[i])
                 screen.blit(text_surface,(800,m))
              if l == "Green" :
-                self.time[i]=time.time()
                 c=b.player_blockinary[i]
                 c.append(l)
                 
@@ -281,11 +255,7 @@ class Player():
              angled_draw(self.color[i],700,700-(d*2*(i+1)),self.current_pos[i],self.current_pos[i],i)
              if len(b.player_blockinary[i]) > 0:
                  
-                #  d= size/len(b.player_blockinary[i])
-                 
-                    
                  s= self.current_pos[i]
-                 
                  m=700-(d*2*(i+1))
                  
                  for x in range(0,len(b.player_blockinary[i])):
@@ -297,10 +267,6 @@ class Player():
                      if s>((d*2)*24):
                         ongoing = False
                         break
-            #  if len(end_blocks[0])>2:
-            #                 pygame.draw.rect(screen,end_blocks[0][1],(0+d,700+(d/4),d,d-(d/2)))
-            #                 pygame.draw.rect(screen,end_blocks[0][2],(0,700,d+2,d+2))
-            #                 pygame.draw.rect(screen,end_blocks[0][0],(0,700,d,d))
 
              if len(b.list_blocks_in_main_chain) > 0:
                  s=0
@@ -327,10 +293,6 @@ class Player():
                      
                      break
              if players - i > 0:
-                # text_surface = font_player.render('push key'+' '+str(text_keys[i*4]), False, self.color[i])       
-                # screen.blit(text_surface,(mid_point,200))
-                # text_surface = font_player.render('pull key'+' '+str(text_keys[i*4+1]), False, self.color[i])
-                # screen.blit(text_surface,(mid_point,300))
                 text_surface = my_font.render('player'+' '+str(i+1), False, self.color[i])
                 screen.blit(text_surface,(mid_point,100))
                 
@@ -456,12 +418,9 @@ while players> len(controler_dict) and players>counter:
         controler_dict[i].init() 
     counter+=1
 f=Player(players+bots)
-
 b=Block()
 
 while end_game==False:
-
-    
     
     ongoing = True
     while ongoing == True:
