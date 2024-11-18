@@ -48,50 +48,45 @@ def input(key):
 def points(player):
     r=True
     sixth= 0
-    g=0
-    e=0
-    v=0
+
+    player_points=0
     for i in range(0,len(end_blocks)):
          if  ('tag' in end_blocks[i] and f.color[player] == end_blocks[i][0])and r==True:
-                v+=1
+                player_points+=1
     for i in range(0,len(b.list_blocks_in_main_chain)):
         sixth=False
-        if i+e > len(b.list_blocks_in_main_chain):
+        if i > len(b.list_blocks_in_main_chain):
             break
         else:
-            
-            qwerty=None  
-            g=i+e
-            
             if 'tag' in b.list_blocks_in_main_chain[g]and f.color[player] == b.list_blocks_in_main_chain[g][0]:
-                v+=1
+                player_points+=1
                 for i in range(0,len(b.list_blocks_in_main_chain)-5):
                     if len(b.list_blocks_in_main_chain[i]) != 4:
-                        z= b.list_blocks_in_main_chain[i]
-                        z.append((212,175,55))
+                        temp_1= b.list_blocks_in_main_chain[i]
+                        temp_1.append((212,175,55))
                         
-                        z.append('tag')
+                        temp_1.append('tag')
                         
-                        b.list_blocks_in_main_chain[i]=z
+                        b.list_blocks_in_main_chain[i]=temp_1
                 
                 
                 
-            elif f.color[player] in b.list_blocks_in_main_chain[g]:
+            elif f.color[player] in b.list_blocks_in_main_chain[i]:
                 sixth= True
                 
             if sixth == True  :
                 
 
                 if  g-5 >0:
-                    if len(b.list_blocks_in_main_chain[g-5]) == 2:
-                        z= b.list_blocks_in_main_chain[g-5]
-                        z.append((212,175,55))
+                    if len(b.list_blocks_in_main_chain[i-5]) == 2:
+                        temp_1= b.list_blocks_in_main_chain[i-5]
+                        temp_1.append((212,175,55))
                         
-                        z.append('tag')
+                        temp_1.append('tag')
                         
-                        b.list_blocks_in_main_chain[g-5]=z
-    if main_blocks[player]<v:
-        main_blocks[player]= v
+                        b.list_blocks_in_main_chain[i-5]=temp_1
+    if main_blocks[player]<player_points:
+        main_blocks[player]= player_points
         
     
 def angled_draw(color,pos1y, pos2y,pos1x, pos2x,player):
@@ -170,7 +165,7 @@ class Player():
         self.amount= amount
         self.color = {}
         self.bot_dict={}        
-        self.current_pos= { }
+        self.current_pos= {}
         self.pos= 0
         self.color_player={}
         for i in range(0,amount):
