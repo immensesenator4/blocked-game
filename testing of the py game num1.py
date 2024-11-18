@@ -1,13 +1,10 @@
 from randomness import true_randomeness as random
 import pygame, sys
-import random as r
+import random as rand
 import pygame.locals
 from pygame.locals import *
-
-from datetime import datetime
-import time
 pygame.font.init()
-import string
+
 
 #vars 
 text_keys='qwertyuiopasdfghjklzxcvbnm'
@@ -17,7 +14,7 @@ main_points={}
 reach = False
 random()
 keyboard = [K_q,K_w,K_e,K_r,K_t,K_y,K_u,K_i,K_o,K_p,K_a,K_s,K_d,K_f,K_g,K_h,K_j,K_k,K_l,K_z,K_x,K_c,K_v,K_b,K_n,K_m]
-current_time = datetime.now()
+
 controler_dict={}
 win_size=(900,900)
 fps= pygame.time.Clock()
@@ -135,13 +132,13 @@ class Block():
     def generate_block(self):
         #generates block
         random()
-        blocke = r.randint(0,10000)
-        if blocke < 1000:
-            blocke = 'Green'
-            return blocke
+        block = rand.randint(0,10000)
+        if block < 1000:
+            block = 'Green'
+            return block
         else:
-            blocke= 'Red'
-            return blocke
+            block= 'Red'
+            return block
     def add_to_chain(self,player_action,player):
         #player actions
         if player_action == 'push':
@@ -156,16 +153,13 @@ class Block():
                         try:    
                             del self.list_blocks_in_main_chain[-1]
                         except:
-                            pass #im too lazy to throw exception so n o
-                        
-                    
+                            pass 
                 for block in self.player_blockinary[player]:
                     self.list_blocks_in_main_chain.append([f.color[player],(90,90,90)])
                 f.current_pos[player]=0+((len(self.list_blocks_in_main_chain))*13.75*2)
                 for i in range(0,int(len(self.player_blockinary[player])/6)):
                     main_blocks[player]+=1
                 self.player_blockinary[player]=[]
-                
             else:
                 return None
         elif player_action == 'catch':
@@ -173,137 +167,101 @@ class Block():
             self.player_blockinary[player]=[]       
 class Player():
     def __init__(self,amount):
-        
-        self.player_cards_dict ={}
         self.amount= amount
         self.color = {}
         self.bot_dict={}        
         self.current_pos= { }
         self.pos= 0
-        self.win_list={}
         self.color_player={}
-        self.player_win=()
         for i in range(0,amount):
-            l=r.randint(0,255)
-            j=r.randint(0,255)
-            d=r.randint(0,255)
+            r=rand.randint(0,255)
+            b=rand.randint(0,255)
+            g=rand.randint(0,255)
             self.color_player[l]= i
-            self.color[i]=(l,j,d)
+            self.color[i]=(r,b,g)
             self.current_pos[i]=self.pos
-            self.win_list[i]=0        
-            if l >= 255:
-                l=255
-    # def hand(self):
-        
-    #     for i in range(self.amount):
-    #         hand=[]
-    #         for _ in range(6):
-    #             hand.append()
-    #         self.player_cards_dict[i]= hand
+            if r >= 255:
+                r=255
     def reset(self):
         if reach==True:
             self.pos=(137.5/10)*2
         else:
             self.pos=0
-        
         for i in range(0,self.amount):
-            
             self.current_pos[i]=self.pos
     def show(self,num):
          global ongoing
          minus=1
-         decoder = {'Green': (0,255 , 0),
-                    'Red':(255, 0 , 0)}
+         decoder = {
+        'Green': (0,255 , 0),
+        'Red':(255, 0 , 0)}
          if self.amount == 1:
              minus=0
          size= ((900/self.amount)-(self.amount*5))/4
          size = int(size)
-         var_font = pygame.font.SysFont('Quicksand-Regular', int(size/(0.66667*(self.amount))))
          my_font = pygame.font.SysFont('Quicksand-Regular', int(size*(0.125*(self.amount))))
-         font_player = pygame.font.SysFont('Quicksand-Regular', int(size*(0.5*(players))))
          mid_point= (450)/(self.amount)-(size/(self.amount-minus))*(self.amount+1)+(size/(self.amount*2.5))
          interprater={}
-         
          mid_point= 450/self.amount
          for i in range(0,self.amount):
-             
              if num ==1: 
-                l=Block().generate_block()
-                interprater[i]=decoder[l]
+                block=Block().generate_block()
+                interprater[i]=decoder[block]
              else:
-                 l= None
-             
-             d= 137.5/10
-             m=700-(d*2*(i+1))
-             
-                            
-                            
+                 block= None
+             constant = 137.5/10
+             mid=700-(constant*2*(i+1))
              if players - i > 0:
-            
                 text_surface = my_font.render('player'+' '+str(i+1), False, self.color[i])
-                screen.blit(text_surface,(800,m))
-            
-    
+                screen.blit(text_surface,(800,mid))
              else:
                 text_surface = my_font.render('bot'+' '+str(i+1-players), False, self.color[i])
-                screen.blit(text_surface,(800,m))
-             if l == "Green" :
-                c=b.player_blockinary[i]
-                c.append(l)
-                
-                b.player_blockinary[i]=c
-             angled_draw(self.color[i],700,700-(d*2*(i+1)),self.current_pos[i],self.current_pos[i],i)
+                screen.blit(text_surface,(800,mid))
+             if block == "Green" :
+                passenger=b.player_blockinary[i]
+                passenger.append(block)
+                b.player_blockinary[i]=passenger
+             angled_draw(self.color[i],700,700-(constant*2*(i+1)),self.current_pos[i],self.current_pos[i],i)
              if len(b.player_blockinary[i]) > 0:
-                 
-                 s= self.current_pos[i]
-                 m=700-(d*2*(i+1))
-                 
+                 possition= self.current_pos[i]
+                 mid=700-(constant*2*(i+1))
                  for x in range(0,len(b.player_blockinary[i])):
-                     
-                
-                     
-                     pygame.draw.rect(screen,self.color[i],(s,m,d,d))
-                     s+= (d*2)
-                     if s>((d*2)*24):
+                     pygame.draw.rect(screen,self.color[i],(possition,mid,constant,constant))
+                     possition+= (constant*2)
+                     if possition>((constant*2)*24):
                         ongoing = False
                         break
-
              if len(b.list_blocks_in_main_chain) > 0:
-                 s=0
-                 
+                 possition=0
                  for x in range(0,len(b.list_blocks_in_main_chain)):
                      
-                     
                      if len(b.list_blocks_in_main_chain[x])==4:
-                        pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][1],(s+d,700+(d/4),d,d-(d/2)))
-                        pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][2],(s,700,d+2,d+2))
-                        pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][0],(s,700,d,d))
+                        pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][1],(possition+constant,700+(constant/4),constant,constant-(constant/2)))
+                        pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][2],(possition,700,constant+2,constant+2))
+                        pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][0],(possition,700,constant,constant))
                         
                      elif len(b.list_blocks_in_main_chain[x])==2:
-                         pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][1],(s+d,700+(d/4),d+2,d-(d/2)))
-                         pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][0],(s,700,d,d))
+                         pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][1],(possition+constant,700+(constant/4),constant+2,constant-(constant/2)))
+                         pygame.draw.rect(screen,b.list_blocks_in_main_chain[x][0],(possition,700,constant,constant))
                      if x==len(b.list_blocks_in_main_chain)-1:
                          if reach==True:
-                            self.pos=s+(137.5/10)*2
+                            self.pos=possition+(137.5/10)*2
                          else:
-                            self.pos=s
-                     s+=d*2
-                 if s>((d*2)*24):
+                            self.pos=possition
+                     possition+=constant*2
+                 if possition>((constant*2)*24):
                      ongoing = False
                      
                      break
              if players - i > 0:
                 text_surface = my_font.render('player'+' '+str(i+1), False, self.color[i])
                 screen.blit(text_surface,(mid_point,100))
-                
                 text_surface = my_font.render('points:'+str(main_blocks[i]), False, self.color[i])
                 screen.blit(text_surface,(mid_point,150))
                 
              else:
                  text_surface = my_font.render('bot'+' '+str(i+1-players), False, self.color[i])
                  screen.blit(text_surface,(mid_point,100))
-                 
-                 
                  text_surface = my_font.render('points :'+str(main_blocks[i]), False, self.color[i])
                  screen.blit(text_surface,(mid_point,150))
              mid_point += 450/(self.amount/2)-size
@@ -313,15 +271,8 @@ class Player():
             
         elif ((self.current_pos[player]  )/(13.75*2))+len(b.player_blockinary[player])< len(b.list_blocks_in_main_chain )-4:
             b.add_to_chain('catch',player)
-            
-    
-
-
-
 nums=[K_0,K_1,K_2,K_3,K_4,K_5,K_6,K_7,K_8,K_9]
-
 rounds=0
-
 num_list=[]
 text_surface = my_font.render('1 0', False, (234, 0, 0))
 bot = None
@@ -339,8 +290,6 @@ while bot==None:
             if event.key == K_n:
                 bot = False  
                 bots = 0
-    
-
     fps.tick(3)
     pygame.display.update()         
     screen.fill((0,0,0))
@@ -353,7 +302,6 @@ while bot==True and bots==0:
     if len(bot_list)>0:
         for x in range(0,len(bot_list)):
             l=10**x
-            
             integerty+=(s[x])*l
     for event in pygame.event.get():
         if event.type==  pygame.KEYDOWN:
@@ -361,21 +309,16 @@ while bot==True and bots==0:
                 bots=integerty   
             elif event.key == K_BACKSPACE:
                 if len(bot_list) > 0:
-
                     del bot_list[-1]
             else:
                 for i in range(0,9):
-                    
                     if event.key == nums[i]:
                         bot_list.append(i)
-                
     text_surface = my_font.render(str(integerty), False, (255,255,255))
     screen.blit(text_surface,(450,600))
     fps.tick(3)
     pygame.display.update()         
     screen.fill((0,0,0))
-
-
 p_l=[]
 players = -1
 while players ==-1: 
@@ -386,7 +329,6 @@ while players ==-1:
     if len(p_l)>0:
         for x in range(0,len(p_l)):
             l=10**x
-            
             integerty+=(s[x])*l
     for event in pygame.event.get():
         if event.type==  pygame.KEYDOWN:
@@ -419,26 +361,19 @@ while players> len(controler_dict) and players>counter:
     counter+=1
 f=Player(players+bots)
 b=Block()
-
 while end_game==False:
-    
     ongoing = True
     while ongoing == True:
-        
-        
         amnt_playing = len(controler_dict)
         for i in range(0,bots):
             f.bot(i+players)
         for event in pygame.event.get():
-            
                 if event.type == pygame.JOYBUTTONDOWN:        
-                
                     for i in range(0,amnt_playing):
                         if controler_dict[i].get_button(0):
                             b.add_to_chain("push",i)
                         if controler_dict[i].get_button(1):
                             b.add_to_chain('catch',i)
-                
                 if event.type == pygame.QUIT: 
                     end_game=True
                     ongoing=False
@@ -447,7 +382,6 @@ while end_game==False:
                     l=0
                     g=1
                     for i in range(amnt_playing,f.amount-bots):
-                        
                         if  event.key == keyboard[l]:
                             b.add_to_chain('push',i)
                         elif event.key ==keyboard[g]:
@@ -456,16 +390,13 @@ while end_game==False:
                         l+=4
         for i in range(0,f.amount):
             points(i)    
-        
         fps.tick(90)
         f.show(1)
         pygame.display.update() 
         screen.fill((0,0,0))
-             
     f.show(0)
     pygame.display.update() 
     screen.fill((0,0,0))
-    
     for i in range(0, players+bots):
         main_points[i]=main_blocks[i]
         f.current_pos[i]-=(137.5/10)*2
@@ -475,14 +406,3 @@ while end_game==False:
         del b.list_blocks_in_main_chain[0]
     except:
         pass
-        
-    
-    
-   
-    
-    
-    
-    
-    
-
-            
