@@ -26,24 +26,24 @@ end_game = False
 text_surface = my_font.render('1 0', False, (234, 0, 0))
 
 #class's and funcs
-def input(key):
-    if key == None:
-        while True:
-            for event in pygame.event.get():
-                if event.type==  pygame.KEYDOWN:
-                    ongoing ==False
-                    break
+# def input(key):
+#     if key == None:
+#         while True:
+#             for event in pygame.event.get():
+#                 if event.type==  pygame.KEYDOWN:
+#                     ongoing ==False
+#                     break
         
-    else:
-        for i in range(0,keyboard):
-            if text_keys[i] == key:
-                key=keyboard[i]
-        while True:
-            for event in pygame.event.get():
-                if event.type==  pygame.KEYDOWN:
-                    if event.key == key:
-                        ongoing ==False
-                        break
+#     else:
+#         for i in range(0,keyboard):
+#             if text_keys[i] == key:
+#                 key=keyboard[i]
+#         while True:
+#             for event in pygame.event.get():
+#                 if event.type==  pygame.KEYDOWN:
+#                     if event.key == key:
+#                         ongoing ==False
+#                         break
 
 def points(player):
     r=True
@@ -114,9 +114,6 @@ def angled_draw(color,pos1y, pos2y,pos1x, pos2x,player):
         y+=median_draw_y
         normal_draw=(x,y)
         
-        
-        
-    
 class Block():
     def __init__(self=None):
         global f
@@ -281,7 +278,6 @@ while bot==None:
                 bot = True  
                 bots = 0
                 
-                
             if event.key == K_n:
                 bot = False  
                 bots = 0
@@ -334,11 +330,9 @@ while players ==-1:
 
                     del p_l[-1]
             else:
-                for i in range(0,9):
-                    
+                for i in range(0,9): 
                     if event.key == nums[i]:
-                        p_l.append(i)
-                
+                        p_l.append(i)               
     text_surface = my_font.render(str(integerty), False, (255,255,255))
     screen.blit(text_surface,(450,600))
     fps.tick(3)
@@ -349,7 +343,6 @@ for i in range(0,players+bots):
     main_points[i]=0
 counter =0
 while players> len(controler_dict) and players>counter:
-    
     for i in range(0,pygame.joystick.get_count()):
         controler_dict[i]=pygame.joystick.Joystick(i)
         controler_dict[i].init() 
