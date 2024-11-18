@@ -58,7 +58,7 @@ def points(player):
         if i > len(b.list_blocks_in_main_chain):
             break
         else:
-            if 'tag' in b.list_blocks_in_main_chain[g]and f.color[player] == b.list_blocks_in_main_chain[g][0]:
+            if 'tag' in b.list_blocks_in_main_chain[i]and f.color[player] == b.list_blocks_in_main_chain[i][0]:
                 player_points+=1
                 for i in range(0,len(b.list_blocks_in_main_chain)-5):
                     if len(b.list_blocks_in_main_chain[i]) != 4:
@@ -77,7 +77,7 @@ def points(player):
             if sixth == True  :
                 
 
-                if  g-5 >0:
+                if  i-5 >0:
                     if len(b.list_blocks_in_main_chain[i-5]) == 2:
                         temp_1= b.list_blocks_in_main_chain[i-5]
                         temp_1.append((212,175,55))
@@ -290,14 +290,14 @@ while bot==None:
     screen.fill((0,0,0))
 bot_list=[]
 while bot==True and bots==0:
-    s=bot_list[::-1]
+    n_b=bot_list[::-1]
     text_surface = my_font.render('how many bots?', False, (255,255,255))
     screen.blit(text_surface,(450,450))
     integerty = 0
     if len(bot_list)>0:
         for x in range(0,len(bot_list)):
             l=10**x
-            integerty+=(s[x])*l
+            integerty+=(n_b[x])*l
     for event in pygame.event.get():
         if event.type==  pygame.KEYDOWN:
             if event.key == K_EQUALS:
@@ -317,14 +317,14 @@ while bot==True and bots==0:
 p_l=[]
 players = -1
 while players ==-1: 
-    s=p_l[::-1]
+    n_p=p_l[::-1]
     text_surface = my_font.render('how many players?', False, (255,255,255))
     screen.blit(text_surface,(450,450))
     integerty = 0
     if len(p_l)>0:
         for x in range(0,len(p_l)):
             l=10**x
-            integerty+=(s[x])*l
+            integerty+=(n_p[x])*l
     for event in pygame.event.get():
         if event.type==  pygame.KEYDOWN:
             if event.key == K_EQUALS:
@@ -374,15 +374,15 @@ while end_game==False:
                     ongoing=False
                     break
                 if event.type == pygame.KEYDOWN:
-                    l=0
-                    g=1
+                    push_key=0
+                    pull_key=1
                     for i in range(amnt_playing,f.amount-bots):
-                        if  event.key == keyboard[l]:
+                        if  event.key == keyboard[push_key]:
                             b.add_to_chain('push',i)
-                        elif event.key ==keyboard[g]:
+                        elif event.key ==keyboard[pull_key]:
                             b.add_to_chain('catch',i)
-                        g+=4
-                        l+=4
+                        pull_key+=4
+                        push_key+=4
         for i in range(0,f.amount):
             points(i)    
         fps.tick(90)
